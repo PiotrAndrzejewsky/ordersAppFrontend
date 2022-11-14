@@ -17,7 +17,7 @@ export class AuthService {
   ) { }
 
   public sendLoginRequest(user: User): Observable<any> {
-    return this.http.post(`${environment.baseUrl}user/login`, user, { observe: 'response'}).pipe(
+    return this.http.post<number>(`${environment.baseUrl}user/login`, user, { observe: 'response'}).pipe(
       tap((res: any)=>{
         this.cookieService.set("Access-Token", res.headers.get(`${environment.AccessToken}`)!);
         this.cookieService.set("Refresh-Token", res.headers.get(`${environment.RefreshToken}`)!);

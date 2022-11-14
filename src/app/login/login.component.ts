@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
-import { CookieService } from 'ngx-cookie-service';
-
 import { User as User } from '../models/login-view.model';
 import { AuthService } from '../services/auth.service';
-import { catchError, switchMap } from 'rxjs';
+import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { DateService } from '../services/date.service';
 
 @Component({
   selector: 'app-login',
@@ -21,8 +21,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private dateService: DateService
   ) { }
 
   public authUser(): void {
@@ -31,7 +31,11 @@ export class LoginComponent {
         alert("Something went wrong")
         return err
       }),
-    ).subscribe(res => this.router.navigateByUrl);
+    ).subscribe(res => {
+      let date = this.dateService.getCurrentDate();
+      let url = environment.getOrderByDayUrl + res.body + "/" + date;
+      this.router.navigate([url]);
+    });
   }
 
 
