@@ -1,3 +1,17 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUrl: "https://personal-hub-backend.herokuapp.com/",
+  baseFrontendUrl: "https://personal-hub-frontend.herokuapp.com/",
+  AccessToken: "Authorization",
+  RefreshToken: "Refresh-Token",
+  createNewOrderUrl: "`${environment.baseUrl}orders`",
+  deleteOrderUrl: "`${environment.baseUrl}orders/`",
+  updateOrderUrl: "`${environment.baseUrl}orders/`",
+  markOrderAsDoneUrl: "`${environment.baseUrl}orders/`",
+  getOrderByWeekUrl: "`${environment.baseUrl}orders/week/`",
+  getOrderByDayUrl: "`${environment.baseUrl}orders/week/`",
+  createNewOrderTypeUrl: "`${environment.baseUrl}orders/type/`",
+  getOrderTypesByUserUrl: "`${environment.baseUrl}orders/type/`",
+  getOrderTypeUrl: "`${environment.baseUrl}orders/type/`",
+  deleteOrderTypeUrl: "`${environment.baseUrl}orders/type/`",
 };
