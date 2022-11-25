@@ -4,8 +4,9 @@ import { User as User } from '../models/login-view.model';
 import { AuthService } from '../services/auth.service';
 import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { DateService } from '../services/date.service';
+import { environment } from 'src/environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private dateService: DateService
+    private dateService: DateService,
+    private cookieService: CookieService
   ) { }
 
   public authUser(): void {
@@ -33,13 +35,14 @@ export class LoginComponent {
       }),
     ).subscribe(res => {
       let date = this.dateService.getCurrentDate();
-      let url = environment.getOrderByDayUrl + res.body + "/" + date;
-      this.router.navigate([url]);
+      this.cookieService.set("id", res.body)
+      console.log("/" + environment.getOrderByDayUrl + res.body + "/" + date)
+      this.router.navigateByUrl("/" + environment.getOrderByDayUrl + res.body + "/" + date);
     });
   }
 
 
   goToSignUp(): void {
-    // window.location.href = this.signUpUrl;
+    
   }
 }
