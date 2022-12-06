@@ -1,7 +1,8 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { OrdersComponent } from './orders/orders.component';
+import { OrdersDayComponent } from './orders-day/orders-day.component';
+import { OrdersWeekComponent } from './orders-week/orders-week.component';
 
 const routes: Routes = [
   {
@@ -10,11 +11,11 @@ const routes: Routes = [
   },
   {
     path:"orders/week/:id/:date",
-    component:OrdersComponent
+    component:OrdersWeekComponent
   },
   {
     path:"orders/day/:id/:date",
-    component:OrdersComponent
+    component:OrdersDayComponent
   },
   {
     path:"**",
