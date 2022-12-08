@@ -65,4 +65,43 @@ export class OrderService {
     let url = environment.baseUrl + environment.markOrderAsDoneUrl + orderId;
     return this.http.post<boolean>(url, null, {headers: this.headers});
   }
+
+  assignOrders(orders: Array<Order>): Array<Array<Order>> {
+    let mondays = [];
+    let tuesdays = [];
+    let wednesdays = [];
+    let thursdays = [];
+    let fridays = [];
+    let saturdays = [];
+    let sundays = [];
+    let ordersArray = [mondays, tuesdays, wednesdays, thursdays, fridays, saturdays, sundays];
+
+    for (let i = 0; i < orders.length; i++) {
+      if (orders[i].plannedCompletionDate.getDay() == 0) {
+        sundays.push(orders[i])
+      }
+      else if (orders[i].plannedCompletionDate.getDay() == 1) {
+        mondays.push(orders[i])
+      }
+      else if (orders[i].plannedCompletionDate.getDay() == 2) {
+        tuesdays.push(orders[i])
+      }
+      else if (orders[i].plannedCompletionDate.getDay() == 3) {
+        wednesdays.push(orders[i])
+      }
+      else if (orders[i].plannedCompletionDate.getDay() == 4) {
+        thursdays.push(orders[i])
+      }
+      else if (orders[i].plannedCompletionDate.getDay() == 5) {
+        fridays.push(orders[i])
+      }
+      else if (orders[i].plannedCompletionDate.getDay() == 6) {
+        saturdays.push(orders[i])
+      }
+    }
+    for (let i = 0; i < ordersArray.length; i++) {
+      ordersArray[i] = this.sortOrdersByDate(ordersArray[i]);
+    }
+    return ordersArray;
+  }
 }

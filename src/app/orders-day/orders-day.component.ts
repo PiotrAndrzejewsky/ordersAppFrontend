@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { concatMap, from, map, Subject, takeUntil, toArray } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { CreateNewOrderComponent } from '../create-new-order/create-new-order.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { Order } from '../models/order.model';
@@ -19,13 +21,15 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
   private unSub$: Subject<void> = new Subject();
 
   public orders: Array<Order> = []
-  public dt: string = this.dateService.convertDateToLocalDateTime(new Date()).replace("T00:00:00", "")
+  public dt: string = new Date().toISOString().split('T')[0];
 
   constructor(
     private dialogRef: MatDialog,
     private orderService: OrderService,
     private route: ActivatedRoute,
-    public dateService: DateService
+    public dateService: DateService,
+    private router: Router,
+    private cookieService: CookieService
   ) { }
   
 
@@ -95,6 +99,10 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
         window.location.reload();
       }
     )
+  }
+
+  changeView():void {
+    this.router.navigateByUrl("/" + environment.getOrderByWeekUrl + this.cookieService.get("id") + "/" + this.date);
   }
 
   ngOnDestroy(): void {

@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { concatMap, from, map, Subject, takeUntil, toArray } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Order } from '../models/order.model';
 import { OrderService } from '../services/order.service';
 
@@ -15,10 +17,13 @@ export class OrdersWeekComponent implements OnInit, OnDestroy {
   private unSub$: Subject<void> = new Subject();
 
   public orders: Array<Order> = [];
+  public ordersArray: Array<Array<Order>> = [];
 
   constructor(
     private orderService: OrderService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private cookieService: CookieService
   ) { }
 
   ngOnInit(): void {
@@ -39,7 +44,15 @@ export class OrdersWeekComponent implements OnInit, OnDestroy {
         return order;
       }),
       toArray()
-    ).subscribe(orders => this.orders = orders);
+    ).subscribe(orders => {
+      this.orders = orders;
+      this.ordersArray = this.orderService.assignOrders(orders);
+      console.log(this.ordersArray);
+    });
+  }
+
+  changeView():void {
+    this.router.navigateByUrl("/" + environment.getOrderByDayUrl + this.cookieService.get("id") + "/" + this.date);
   }
 
   ngOnDestroy(): void {

@@ -1,10 +1,11 @@
 <div>
     <input type="date"
     id="date"
-    [(ngModel)] ="dt">
+    [(ngModel)] ="dt"
+    value="08/12/2022">
     <button type="button" (click)="changeDate()">Submit</button>
     <button (click)="createNewOrder()">Add new order</button>
-    <button>Change view</button>
+    <button (click)="changeView()">Change view</button>
 </div>
 <table id="day">
     <tr>
