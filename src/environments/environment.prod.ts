@@ -9,7 +9,7 @@ export const environment = {
   updateOrderUrl: "orders/",
   markOrderAsDoneUrl: "orders/",
   getOrderByWeekUrl: "orders/week/",
-  getOrderByDayUrl: "orders/week/",
+  getOrderByDayUrl: "orders/day/",
   createNewOrderTypeUrl: "orders/type",
   getOrderTypesByUserUrl: "orders/type/",
   getOrderTypeUrl: "orders/type/",

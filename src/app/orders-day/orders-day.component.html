@@ -1,0 +1,37 @@
+<div>
+    <input type="date"
+    id="date"
+    [(ngModel)] ="dt"
+    value="08/12/2022">
+    <button type="button" (click)="changeDate()">Submit</button>
+    <button (click)="createNewOrder()">Add new order</button>
+    <button (click)="changeView()">Change view</button>
+</div>
+<table id="day">
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Client</th>
+        <th>Quantity</th>
+        <th>Completed</th>
+        <th>Date</th>
+        <th>Delete order</th>
+        <th>Edit order</th>
+        <th>Mark order as done</th>
+    </tr>
+
+    <tr *ngFor="let order of orders">
+        <td>{{order.title}}</td>
+        <td>{{order.description}}</td>
+        <td>{{order.price}}</td>
+        <td>{{order.client}}</td>
+        <td>{{order.quantity}}</td>
+        <td>{{order.completed}}</td>
+        <td>{{this.dateService.convertTime(order.plannedCompletionDate)}}</td>
+        <td><button (click)="deleteOrder(order.orderId)">Delete</button></td>
+        <td><button (click)="editOrder(order.orderId)">Edit</button></td>
+        <td><button (click)="changeCompletionStatus(order.orderId)">Mark as done</button></td>
+    </tr>
+</table>
+
