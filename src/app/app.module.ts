@@ -15,6 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditOrderComponent } from './edit-order/edit-order.component';
 import { SignUpComponent } from './sign-up/sign-up.component'
 import { HeaderInterceptor } from './header-interceptor';
+import { CreateNewOrderTypeComponent } from './create-new-order-type/create-new-order-type.component';
+import { DeleteOrderTypeComponent } from './delete-order-type/delete-order-type.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { HeaderInterceptor } from './header-interceptor';
     OrdersDayComponent,
     CreateNewOrderComponent,
     EditOrderComponent,
-    SignUpComponent
+    SignUpComponent,
+    CreateNewOrderTypeComponent,
+    DeleteOrderTypeComponent
   ],
   imports: [
     BrowserModule,

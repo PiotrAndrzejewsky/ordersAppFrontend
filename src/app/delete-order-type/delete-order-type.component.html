@@ -1,0 +1,14 @@
+<h2>Choose order type to delete</h2>
+
+<table>
+
+    <tr>
+        <th>Name</th>
+        <th>Delete</th>
+    </tr>
+
+    <tr *ngFor="let orderType of orderTypes">
+        <td>{{orderType.name}}</td>
+        <td><button (click)="deleteOrderType(orderType.orderTypeId)">Delete</button></td>
+    </tr>
+</table>

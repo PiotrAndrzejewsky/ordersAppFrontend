@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { concatMap, from, map, Subject, takeUntil, toArray } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CreateNewOrderTypeComponent } from '../create-new-order-type/create-new-order-type.component';
 import { CreateNewOrderComponent } from '../create-new-order/create-new-order.component';
+import { DeleteOrderTypeComponent } from '../delete-order-type/delete-order-type.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { Order } from '../models/order.model';
 import { DateService } from '../services/date.service';
@@ -37,11 +39,9 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     this.route.params.pipe(
       takeUntil(this.unSub$)
     ).subscribe(params => {
-      this.date = params["date"]
+      this.date = params["date"];
     })
-    this.getOrdersByDay()
-    
-    
+    this.getOrdersByDay();
   }
 
   getOrdersByDay() {
@@ -58,12 +58,12 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
 
   changeDate() {
     if (this.dt == "") {
-      this.date = this.dateService.convertDateToLocalDateTime(new Date())
+      this.date = this.dateService.convertDateToLocalDateTime(new Date());
     }
     else {
-      this.date = this.dt + "T00:00:00"
+      this.date = this.dt + "T00:00:00";
     }
-    this.getOrdersByDay()
+    this.getOrdersByDay();
   }
 
   createNewOrder(): void {
@@ -101,8 +101,20 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     )
   }
 
-  changeView():void {
+  changeView(): void {
     this.router.navigateByUrl("/" + environment.getOrderByWeekUrl + this.cookieService.get("id") + "/" + this.date);
+  }
+
+  addNewOrderType(): void {
+    this.dialogRef.open(CreateNewOrderTypeComponent, {
+      width:'50%'
+    });
+  }
+
+  deleteOrderType(): void {
+    this.dialogRef.open(DeleteOrderTypeComponent, {
+      width:'50%'
+    });
   }
 
   ngOnDestroy(): void {

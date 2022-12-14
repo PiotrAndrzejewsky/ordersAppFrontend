@@ -48,7 +48,7 @@ export class CreateNewOrderComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
-    this.dialogRef.closeAll()
+    this.dialogRef.closeAll();
   }
   
   addNewOrder() {
