@@ -1,0 +1,55 @@
+<button (click)="changeView()">change view</button>
+
+<div id="headers">
+    <th>Monday</th>
+    <th>Tuesday</th>
+    <th>Wensday</th>
+    <th>Thursday</th>
+    <th>Friday</th>
+    <th>Saturday</th>
+    <th>Sunday</th>
+</div>
+
+<div id="table">
+    <table>
+        <tr *ngFor="let order of ordersArray[0]">
+            <td>{{order.title}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr *ngFor="let order of ordersArray[1]">
+            <td>{{order.title}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr *ngFor="let order of ordersArray[2]">
+            <td>{{order.title}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr *ngFor="let order of ordersArray[3]">
+            <td>{{order.title}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr *ngFor="let order of ordersArray[4]">
+            <td>{{order.title}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr *ngFor="let order of ordersArray[5]">
+            <td>{{order.title}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr *ngFor="let order of ordersArray[6]">
+            <td>{{order.title}}</td>
+        </tr>
+    </table>
+</div>

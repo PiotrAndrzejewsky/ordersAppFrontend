@@ -3,7 +3,21 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: "http://localhost:8080/",
+  baseFrontendUrl: "http://localhost:4200/",
+  AccessToken: "Authorization",
+  RefreshToken: "Refresh-Token",
+  createNewOrderUrl: "orders",
+  deleteOrderUrl: "orders/",
+  updateOrderUrl: "orders/",
+  markOrderAsDoneUrl: "orders/",
+  getOrderByWeekUrl: "orders/week/",
+  getOrderByDayUrl: "orders/day/",
+  createNewOrderTypeUrl: "orders/type",
+  getOrderTypesByUserUrl: "orders/type/",
+  getOrderTypeUrl: "orders/type/",
+  deleteOrderTypeUrl: "orders/type/",
 };
 
 /*

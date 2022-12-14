@@ -1,0 +1,23 @@
+<h2>Create new order type!</h2>
+
+<form name="form" #f="ngForm" (submit)="createNewOrderType()" class="login-form">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text"
+                id="name"
+                class="form-control"
+                name="name"
+                placeholder="Name"
+                [(ngModel)]="orderType.name">
+    </div>
+
+    <div class="form-group-btn">
+        <button type="submit" class="submit-btn">
+            <span>Create</span>
+        </button>
+
+        <button type="button" class="signUp-btn" (click)="cancel()">
+            <span>Cancel</span>
+        </button>
+    </div>
+</form>

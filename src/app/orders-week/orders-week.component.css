@@ -1,0 +1,25 @@
+#table {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+#table table {
+    width: 10%;
+    text-align: center;
+    min-width: 70px;
+    height: 10%;
+    
+}
+#headers {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+#headers th {
+    width: 10%;
+    text-align: center;
+    min-width: 70px;
+}
