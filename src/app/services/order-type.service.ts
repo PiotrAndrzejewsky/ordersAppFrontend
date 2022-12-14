@@ -14,13 +14,9 @@ export class OrderTypeService {
         private cookieService: CookieService,
     ) {}
 
-    public headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `${this.cookieService.get(environment.AccessToken)}`
-    });
 
     getOrderTypesByUserId(): Observable<Array<OrderType>> {
         let url = environment.baseUrl + environment.getOrderTypesByUserUrl + this.cookieService.get("id")
-        return this.http.get<Array<OrderType>>(url, {headers: this.headers})
+        return this.http.get<Array<OrderType>>(url)
     }
 }

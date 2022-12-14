@@ -14,27 +14,21 @@ export class OrderService {
         private http: HttpClient,
         private cookieService: CookieService
     ) { }
-
-    // TODO: interceptor
-    public headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `${this.cookieService.get(environment.AccessToken)}`
-    });
     
 
   getOrdersByWeek(date: string): Observable<Array<Order>> {
     let url = environment.baseUrl + environment.getOrderByWeekUrl + this.cookieService.get("id") + "/" + date
-    return this.http.get<Array<Order>>(url, {headers: this.headers})
+    return this.http.get<Array<Order>>(url)
   } 
 
   getOrdersByDay(date: string): Observable<Array<Order>> {
     let url = environment.baseUrl + environment.getOrderByDayUrl + this.cookieService.get("id") + "/" + date
-    return this.http.get<Array<Order>>(url, {headers: this.headers})
+    return this.http.get<Array<Order>>(url)
   }
 
   createNewOrder(order: Order): Observable<boolean> {
     let url = environment.baseUrl + environment.createNewOrderUrl;
-    return this.http.post<boolean>(url, order, {headers: this.headers})
+    return this.http.post<boolean>(url, order)
   }
 
   sortOrdersByDate(orders: Array<Order>): Array<Order> {
@@ -52,18 +46,17 @@ export class OrderService {
 
   deleteOrder(orderId: number): Observable<boolean>{
     let url = environment.baseUrl + environment.deleteOrderUrl + orderId;
-    return this.http.delete<boolean>(url, {headers: this.headers});
+    return this.http.delete<boolean>(url);
   }
 
   editOrder(order: Order): Observable<boolean> {
     let url = environment.baseUrl + environment.updateOrderUrl + order.orderId;
-    console.log(this.headers)
-    return this.http.patch<boolean>(url, order, {headers: this.headers});
+    return this.http.patch<boolean>(url, order);
   }
 
   changeCompletionStatus(orderId: number): Observable<boolean> {
     let url = environment.baseUrl + environment.markOrderAsDoneUrl + orderId;
-    return this.http.post<boolean>(url, null, {headers: this.headers});
+    return this.http.post<boolean>(url, null);
   }
 
   assignOrders(orders: Array<Order>): Array<Array<Order>> {
