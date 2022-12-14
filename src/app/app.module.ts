@@ -12,7 +12,8 @@ import { OrdersWeekComponent } from './orders-week/orders-week.component';
 import { OrdersDayComponent } from './orders-day/orders-day.component';
 import { CreateNewOrderComponent } from './create-new-order/create-new-order.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EditOrderComponent } from './edit-order/edit-order.component'
+import { EditOrderComponent } from './edit-order/edit-order.component';
+import { SignUpComponent } from './sign-up/sign-up.component'
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { EditOrderComponent } from './edit-order/edit-order.component'
     OrdersWeekComponent,
     OrdersDayComponent,
     CreateNewOrderComponent,
-    EditOrderComponent
+    EditOrderComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

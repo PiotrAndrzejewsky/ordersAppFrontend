@@ -43,6 +43,6 @@ export class LoginComponent {
 
 
   goToSignUp(): void {
-    
+    this.router.navigateByUrl("/signUp");
   }
 }
