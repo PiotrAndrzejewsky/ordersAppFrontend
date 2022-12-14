@@ -7,13 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { OrdersWeekComponent } from './orders-week/orders-week.component';
 import { OrdersDayComponent } from './orders-day/orders-day.component';
 import { CreateNewOrderComponent } from './create-new-order/create-new-order.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditOrderComponent } from './edit-order/edit-order.component';
 import { SignUpComponent } from './sign-up/sign-up.component'
+import { HeaderInterceptor } from './header-interceptor';
 
 
 @NgModule({
@@ -36,7 +37,11 @@ import { SignUpComponent } from './sign-up/sign-up.component'
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: HeaderInterceptor,
+    multi: true,
+  }],
   bootstrap: [AppComponent]
 })
 
