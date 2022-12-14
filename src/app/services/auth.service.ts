@@ -25,4 +25,9 @@ export class AuthService {
       })
     )
   }
+
+  public saveUser(user: User) {
+    let url = environment.baseUrl + "user/save"
+    return this.http.post<boolean>(url, user, { observe: 'response'})
+  }
 }
