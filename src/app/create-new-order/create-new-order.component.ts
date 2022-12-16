@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { Subject, takeUntil } from 'rxjs';
-import { OrderType } from '../models/order-type.model';
-import { Order } from '../models/order.model';
+import { OrderType } from '../models/order-type-model';
+import { Order } from '../models/order-model';
 import { OrderTypeService } from '../services/order-type.service';
 import { OrderService } from '../services/order.service';
 

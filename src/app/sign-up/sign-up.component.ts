@@ -5,8 +5,8 @@ import { FormGroup } from '@ngneat/reactive-forms';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/login-view.model';
-import { SignUpUser } from '../models/sign-up-view.model';
+import { User } from '../models/login-view-model';
+import { SignUpUser } from '../models/sign-up-view-model';
 import { AuthService } from '../services/auth.service';
 import { DateService } from '../services/date.service';
 

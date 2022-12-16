@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { concatMap, from, map, Subject, takeUntil, toArray } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Order } from '../models/order.model';
+import { Order } from '../models/order-model';
 import { OrderService } from '../services/order.service';
 
 @Component({

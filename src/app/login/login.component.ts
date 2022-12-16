@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-
-import { User as User } from '../models/login-view.model';
 import { AuthService } from '../services/auth.service';
 import { catchError, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { DateService } from '../services/date.service';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
+import { User } from '../models/login-view-model';
 
 @Component({
   selector: 'app-login',

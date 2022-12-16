@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import { OrderType } from '../models/order-type.model';
+import { OrderType } from '../models/order-type-model';
 import { OrderTypeService } from '../services/order-type.service';
 
 @Component({
