@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { OrderType } from "../models/order-type.model";
+import { OrderType } from "../models/order-type-model";
 
 @Injectable({
     providedIn: 'root'

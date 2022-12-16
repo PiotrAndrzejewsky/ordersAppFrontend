@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/login-view.model';
+import { User } from '../models/login-view-model';
 
 @Injectable({
   providedIn: 'root'

@@ -2,8 +2,8 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import { OrderType } from '../models/order-type.model';
-import { Order } from '../models/order.model';
+import { OrderType } from '../models/order-type-model';
+import { Order } from '../models/order-model';
 import { OrderTypeService } from '../services/order-type.service';
 import { OrderService } from '../services/order.service';
 

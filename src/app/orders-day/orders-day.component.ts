@@ -8,7 +8,7 @@ import { CreateNewOrderTypeComponent } from '../create-new-order-type/create-new
 import { CreateNewOrderComponent } from '../create-new-order/create-new-order.component';
 import { DeleteOrderTypeComponent } from '../delete-order-type/delete-order-type.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
-import { Order } from '../models/order.model';
+import { Order } from '../models/order-model';
 import { DateService } from '../services/date.service';
 import { OrderService } from '../services/order.service';
 
