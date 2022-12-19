@@ -45,6 +45,6 @@ export class DateService {
         else {
             minutes = d.getMinutes().toString();
         } 
-        return hours + ":" + minutes
+        return hours + ":" + minutes;
     }
 }

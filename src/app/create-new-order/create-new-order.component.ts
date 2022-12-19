@@ -52,17 +52,14 @@ export class CreateNewOrderComponent implements OnInit, OnDestroy {
   }
   
   addNewOrder() {
-    this.order.userId = Number(this.cookieService.get("id"))
-    console.log(this.order.quantity)
-    console.log(this.order.orderTypeId)
-    console.log(this.order.plannedCompletionDate)
+    this.order.userId = Number(this.cookieService.get("id"));
+    console.log(this.order.plannedCompletionDate);
     this.ordersService.createNewOrder(this.order).pipe(
       takeUntil(this.unSub$)
     )
     .subscribe(
       res => {
-        this.cancel()
-        window.location.reload()
+        this.cancel();
       }
     )
   }

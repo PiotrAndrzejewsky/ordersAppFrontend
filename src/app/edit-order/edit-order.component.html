@@ -1,3 +1,5 @@
+<h2>Edit order:</h2>
+
 <form [formGroup]="editForm">
     <label for="title">Title:</label>
     <input type="text"
@@ -45,7 +47,7 @@
                 id="plannedDate"
                 class="form-control"
                 [(ngModel)]="order.plannedCompletionDate"
-                formControlName="plannedDate">
+                formControlName="plannedCompletionDate">
 
     <label for="quantity">Quantity:</label>
     <input type="number"
@@ -55,12 +57,14 @@
                 formControlName="quantity">
 </form>
 
-<div>
-    <button id="cancel" name="cancel" (click)="cancel()">
-        Cancel
-    </button>
+<br>
 
-    <button id="submit" name="submit" (click)="editOrder()">
-        Update
-    </button>
+<div class="buttons">
+    <span type="button" (click)="cancel()" class="material-symbols-outlined">
+        close
+    </span>
+
+    <span type="button" (click)="editOrder()" class="material-symbols-outlined">
+        done
+    </span>
 </div>
