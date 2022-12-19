@@ -9,7 +9,9 @@ import { CreateNewOrderComponent } from '../create-new-order/create-new-order.co
 import { DeleteOrderTypeComponent } from '../delete-order-type/delete-order-type.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { Order } from '../models/order-model';
+import { OrderType } from '../models/order-type-model';
 import { DateService } from '../services/date.service';
+import { OrderTypeService } from '../services/order-type.service';
 import { OrderService } from '../services/order.service';
 
 @Component({
@@ -22,7 +24,8 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
   private date: string = "";
   private unSub$: Subject<void> = new Subject();
 
-  public orders: Array<Order> = []
+  public orders: Array<Order> = [];
+  public orderTypes: Array<OrderType> = [];
   public dt: string = new Date().toISOString().split('T')[0];
 
   constructor(
@@ -31,7 +34,8 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public dateService: DateService,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private orderTypeService: OrderTypeService
   ) { }
   
 
@@ -42,6 +46,7 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
       this.date = params["date"];
     })
     this.getOrdersByDay();
+    this.getOrderTypes();
   }
 
   getOrdersByDay() {
@@ -54,6 +59,26 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
       }),
       toArray()
     ).subscribe(orders => this.orders = this.orderService.sortOrdersByDate(orders));
+  }
+
+  getOrderTypes() {
+    this.orderTypeService.getOrderTypesByUserId().pipe(
+      takeUntil(this.unSub$)
+    ).subscribe(
+      res => {
+        this.orderTypes = res;
+      }
+    )
+  }
+
+  getOrderType(orderTypeId: string): string  {
+    let id = Number(orderTypeId);
+    for (let i = 0; i < this.orderTypes.length; i++) {
+      if (this.orderTypes[i].orderTypeId == id) {
+        return this.orderTypes[i].name;
+      }
+    }
+    return "";
   }
 
   changeDate() {
@@ -86,7 +111,12 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     )
     .subscribe(
       res => {
-        window.location.reload();
+        for (let i = 0; i < this.orders.length; i++) {
+          if (this.orders[i].orderId == orderId) {
+            this.orders.splice(i, 1);
+            return;
+          }
+        }
       }
     )
   }
@@ -96,9 +126,13 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
       takeUntil(this.unSub$)
     ).subscribe(
       res => {
-        window.location.reload();
+        for (let order of this.orders) {
+          if (order.orderId == orderId) {
+            order.completed = !order.completed;
+          }
+        }
       }
-    )
+    );
   }
 
   changeView(): void {

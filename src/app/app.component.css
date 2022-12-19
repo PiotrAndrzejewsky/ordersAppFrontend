@@ -1,0 +1,11 @@
+* { padding: 0; 
+    margin: 0; 
+    background-color: rgba(251,250,251,255);
+}
+html, body, .container {
+    height: 100vh;
+    min-height: 100% !important;
+    width: 100%;
+    min-width: 100%;
+    font-size: large;
+}
