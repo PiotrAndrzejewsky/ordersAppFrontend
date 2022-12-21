@@ -37,14 +37,14 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   }
 
   setForm(): void {
-    let date = this.order.plannedCompletionDate.toISOString().substring(0,11) + this.order.plannedCompletionDate.toLocaleTimeString().substring(0, 5);
+    let date = this.order.plannedCompletionDate;
     this.editForm = new FormGroup({
       title: new FormControl(this.order.title),
       description: new FormControl(this.order.description),
       orderTypeId: new FormControl(this.order.orderTypeId),
       price: new FormControl(this.order.price),
       client: new FormControl(this.order.client),
-      plannedDate: new FormControl(date),
+      plannedCompletionDate: new FormControl(date),
       quantity: new FormControl(this.order.quantity)
     })
   }
@@ -55,7 +55,6 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     ).subscribe(
       res => {
         this.cancel();
-        window.location.reload();
       }
 
     )

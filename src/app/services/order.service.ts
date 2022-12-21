@@ -16,13 +16,13 @@ export class OrderService {
     ) { }
     
 
-  getOrdersByWeek(date: string): Observable<Array<Order>> {
-    let url = environment.baseUrl + environment.getOrderByWeekUrl + this.cookieService.get("id") + "/" + date
+  getOrdersByWeek(): Observable<Array<Order>> {
+    let url = environment.baseUrl + environment.getOrderByWeekUrl + "/" + this.cookieService.get("id") + "/" + this.cookieService.get("date");
     return this.http.get<Array<Order>>(url)
   } 
 
-  getOrdersByDay(date: string): Observable<Array<Order>> {
-    let url = environment.baseUrl + environment.getOrderByDayUrl + this.cookieService.get("id") + "/" + date
+  getOrdersByDay(): Observable<Array<Order>> {
+    let url = environment.baseUrl + environment.getOrderByDayUrl + "/" + this.cookieService.get("id") + "/" + this.cookieService.get("date");
     return this.http.get<Array<Order>>(url)
   }
 

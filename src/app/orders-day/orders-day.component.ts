@@ -9,7 +9,9 @@ import { CreateNewOrderComponent } from '../create-new-order/create-new-order.co
 import { DeleteOrderTypeComponent } from '../delete-order-type/delete-order-type.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { Order } from '../models/order-model';
+import { OrderType } from '../models/order-type-model';
 import { DateService } from '../services/date.service';
+import { OrderTypeService } from '../services/order-type.service';
 import { OrderService } from '../services/order.service';
 
 @Component({
@@ -22,38 +24,59 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
   private date: string = "";
   private unSub$: Subject<void> = new Subject();
 
-  public orders: Array<Order> = []
-  public dt: string = new Date().toISOString().split('T')[0];
+  public orders: Array<Order> = [];
+  public orderTypes: Array<OrderType> = [];
+  public dt: string = "";
 
   constructor(
     private dialogRef: MatDialog,
     private orderService: OrderService,
-    private route: ActivatedRoute,
     public dateService: DateService,
     private router: Router,
+    private orderTypeService: OrderTypeService,
     private cookieService: CookieService
   ) { }
-  
+
 
   ngOnInit(): void {
-    this.route.params.pipe(
-      takeUntil(this.unSub$)
-    ).subscribe(params => {
-      this.date = params["date"];
-    })
-    this.getOrdersByDay();
+    this.date = this.dateService.getDate();
+    this.dt = this.date.split("T")[0];
+    this.changeDate();
+    this.getOrderTypes();
   }
 
   getOrdersByDay() {
-    this.orderService.getOrdersByDay(this.date).pipe(
+    this.orderService.getOrdersByDay().pipe(
       takeUntil(this.unSub$),
       concatMap(orders => from(orders)),
-      map(order => { 
+      map(order => {
         order.plannedCompletionDate = new Date(order.plannedCompletionDate);
         return order;
       }),
       toArray()
-    ).subscribe(orders => this.orders = this.orderService.sortOrdersByDate(orders));
+    ).subscribe(orders => {
+      this.orders = this.orderService.sortOrdersByDate(orders)
+    });
+  }
+
+  getOrderTypes() {
+    this.orderTypeService.getOrderTypesByUserId().pipe(
+      takeUntil(this.unSub$)
+    ).subscribe(
+      res => {
+        this.orderTypes = res;
+      }
+    )
+  }
+
+  getOrderType(orderTypeId: string): string  {
+    let id = Number(orderTypeId);
+    for (let i = 0; i < this.orderTypes.length; i++) {
+      if (this.orderTypes[i].orderTypeId == id) {
+        return this.orderTypes[i].name;
+      }
+    }
+    return "";
   }
 
   changeDate() {
@@ -63,13 +86,8 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     else {
       this.date = this.dt + "T00:00:00";
     }
+    this.cookieService.set("date", this.date);
     this.getOrdersByDay();
-  }
-
-  createNewOrder(): void {
-    this.dialogRef.open(CreateNewOrderComponent, {
-      width:'50%'
-    });
   }
 
   editOrder(orderId: number): void {
@@ -77,7 +95,13 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     this.dialogRef.open(EditOrderComponent, {
       width:'50%',
       data: order
-    });
+    }).afterClosed().pipe(
+      takeUntil(this.unSub$)
+    ).subscribe(
+      res => {
+        this.getOrdersByDay();
+      }
+    );
   }
 
   deleteOrder(orderId: number): void {
@@ -86,7 +110,12 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     )
     .subscribe(
       res => {
-        window.location.reload();
+        for (let i = 0; i < this.orders.length; i++) {
+          if (this.orders[i].orderId == orderId) {
+            this.orders.splice(i, 1);
+            return;
+          }
+        }
       }
     )
   }
@@ -96,25 +125,18 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
       takeUntil(this.unSub$)
     ).subscribe(
       res => {
-        window.location.reload();
+        for (let order of this.orders) {
+          if (order.orderId == orderId) {
+            order.completed = !order.completed;
+          }
+        }
       }
-    )
+    );
   }
 
-  changeView(): void {
-    this.router.navigateByUrl("/" + environment.getOrderByWeekUrl + this.cookieService.get("id") + "/" + this.date);
-  }
-
-  addNewOrderType(): void {
-    this.dialogRef.open(CreateNewOrderTypeComponent, {
-      width:'50%'
-    });
-  }
-
-  deleteOrderType(): void {
-    this.dialogRef.open(DeleteOrderTypeComponent, {
-      width:'50%'
-    });
+  onNeedUpdate() {
+    console.log("dziala")
+    this.getOrdersByDay();
   }
 
   ngOnDestroy(): void {

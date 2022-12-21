@@ -1,0 +1,29 @@
+div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+table, tr {
+    display: flex;
+    width: 100%;
+}
+
+table {
+    flex-direction: column;
+}
+
+tr {
+    flex-direction: row;
+}
+th, td {
+    width: 50%;
+    display: flex;
+}
+
+td {
+    text-align: center;
+}
+

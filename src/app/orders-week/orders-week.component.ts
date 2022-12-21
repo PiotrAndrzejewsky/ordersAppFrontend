@@ -1,9 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { concatMap, from, map, Subject, takeUntil, toArray } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CreateNewOrderTypeComponent } from '../create-new-order-type/create-new-order-type.component';
+import { CreateNewOrderComponent } from '../create-new-order/create-new-order.component';
+import { DeleteOrderTypeComponent } from '../delete-order-type/delete-order-type.component';
+import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { Order } from '../models/order-model';
+import { DateService } from '../services/date.service';
 import { OrderService } from '../services/order.service';
 
 @Component({
@@ -18,28 +24,27 @@ export class OrdersWeekComponent implements OnInit, OnDestroy {
 
   public orders: Array<Order> = [];
   public ordersArray: Array<Array<Order>> = [];
+  public dt: string = "";
 
   constructor(
     private orderService: OrderService,
-    private route: ActivatedRoute,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    public dateService: DateService,
+    private dialogRef: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.route.params.pipe(
-      takeUntil(this.unSub$)
-    ).subscribe(params => {
-      this.date = params["date"]
-    })
-    this.getOrdersByWeek()
+    this.date = this.dateService.getDate();
+    this.dt = this.date.split("T")[0];
+    this.getOrdersByWeek();
   }
 
   public getOrdersByWeek() {
-    this.orderService.getOrdersByWeek(this.date).pipe(
+    this.orderService.getOrdersByWeek().pipe(
       takeUntil(this.unSub$),
       concatMap(orders => from(orders)),
-      map(order => { 
+      map(order => {
         order.plannedCompletionDate = new Date(order.plannedCompletionDate);
         return order;
       }),
@@ -47,12 +52,69 @@ export class OrdersWeekComponent implements OnInit, OnDestroy {
     ).subscribe(orders => {
       this.orders = orders;
       this.ordersArray = this.orderService.assignOrders(orders);
-      console.log(this.ordersArray);
     });
   }
 
   changeView():void {
-    this.router.navigateByUrl("/" + environment.getOrderByDayUrl + this.cookieService.get("id") + "/" + this.date);
+    this.router.navigateByUrl("/" + environment.getOrderByDayUrl);
+  }
+
+  changeDate() {
+    if (this.dt == "") {
+      this.date = this.dateService.convertDateToLocalDateTime(new Date());
+    }
+    else {
+      this.date = this.dt + "T00:00:00";
+    }
+    this.cookieService.set("date", this.date);
+    this.getOrdersByWeek();
+  }
+
+  createNewOrder(): void {
+    this.dialogRef.open(CreateNewOrderComponent, {
+      width:'50%'
+    });
+  }
+
+  editOrder(orderId: number): void {
+    let order = this.orders.find(order => order.orderId === orderId);
+    console.log(order);
+    this.dialogRef.open(EditOrderComponent, {
+      width:'50%',
+      data: order
+    });
+  }
+
+  deleteOrder(orderId: number): void {
+    this.orderService.deleteOrder(orderId).pipe(
+      takeUntil(this.unSub$)
+    )
+    .subscribe(
+      res => {
+        for (let i = 0; i < this.orders.length; i++) {
+          if (this.orders[i].orderId == orderId) {
+            this.orders.splice(i, 1);
+            return;
+          }
+        }
+      }
+    )
+  }
+
+  addNewOrderType(): void {
+    this.dialogRef.open(CreateNewOrderTypeComponent, {
+      width:'50%'
+    });
+  }
+
+  deleteOrderType(): void {
+    this.dialogRef.open(DeleteOrderTypeComponent, {
+      width:'50%'
+    });
+  }
+
+  onNeedUpdate(): void {
+    this.getOrdersByWeek();
   }
 
   ngOnDestroy(): void {

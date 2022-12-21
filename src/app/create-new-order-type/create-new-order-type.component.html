@@ -11,13 +11,15 @@
                 [(ngModel)]="orderType.name">
     </div>
 
-    <div class="form-group-btn">
-        <button type="submit" class="submit-btn">
-            <span>Create</span>
-        </button>
+    <br>
 
-        <button type="button" class="signUp-btn" (click)="cancel()">
-            <span>Cancel</span>
-        </button>
+    <div class="buttons">
+        <span type="button" (click)="cancel()" class="material-symbols-outlined">
+            close
+        </span>
+    
+        <span type="button" (click)="createNewOrderType()" class="material-symbols-outlined">
+            add
+        </span>
     </div>
 </form>

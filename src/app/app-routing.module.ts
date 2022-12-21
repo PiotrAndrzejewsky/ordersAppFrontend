@@ -11,11 +11,11 @@ const routes: Routes = [
     component:LoginComponent
   },
   {
-    path:"orders/week/:id/:date",
+    path:"orders/week",
     component:OrdersWeekComponent
   },
   {
-    path:"orders/day/:id/:date",
+    path:"orders/day",
     component:OrdersDayComponent
   },
   {

@@ -1,10 +1,13 @@
+<h2>Create new order:</h2>
+
 <form action="">
     <label for="title">Title:</label>
     <input type="text"
                 id="title"
                 class="form-control"
                 name="title"
-                [(ngModel)]="order.title">
+                [(ngModel)]="order.title"
+                required>
 
     <label for="description">Description:</label>
     <input type="text"
@@ -17,7 +20,8 @@
     <select id="orderType"
             class="form-control"
             name="orderType"
-            [(ngModel)]="order.orderTypeId">
+            [(ngModel)]="order.orderTypeId"
+            required>
         <option *ngFor="let orderType of orderTypes"
             [value]="orderType.orderTypeId">
             {{orderType.name}}
@@ -54,12 +58,14 @@
                 [(ngModel)]="order.quantity">
 </form>
 
-<div>
-    <button id="cancel" name="cancel" (click)="cancel()">
-        Cancel
-    </button>
+<br>
 
-    <button id="submit" name="submit" (click)="addNewOrder()">
-        Create
-    </button>
+<div class="buttons">
+    <span type="button" (click)="cancel()" class="material-symbols-outlined">
+        close
+    </span>
+
+    <span type="button" (click)="addNewOrder()" class="material-symbols-outlined">
+        add
+    </span>
 </div>
