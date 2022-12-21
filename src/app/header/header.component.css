@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  height: 10%;
+  width: 100%;
+  min-width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.header > div {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
