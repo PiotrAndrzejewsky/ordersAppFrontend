@@ -135,7 +135,6 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
   }
 
   onNeedUpdate() {
-    console.log("dziala")
     this.getOrdersByDay();
   }
 

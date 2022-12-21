@@ -11,8 +11,8 @@ export class DateService {
     ) {}
 
     public convertDateToLocalDateTime(d:Date):string {
-        let month = ""
-        let day = ""
+        let month = "";
+        let day = "";
         if ((d.getMonth().valueOf() + 1) / 10 < 1) {
             month = "0" + (d.getMonth().valueOf() + 1).toString();
         }
@@ -31,8 +31,14 @@ export class DateService {
     }
 
     public convertTime(d: Date):string {
-        let hours = ""
-        let minutes = ""
+        let hours = "";
+        let minutes = "";
+        try {
+          d.getHours();
+        }
+        catch {
+          return this.convertLocalDateTimeToDate(d);
+        }
         if (d.getHours() / 10 < 1) {
             hours = "0" + d.getHours().toString();
         }
@@ -47,6 +53,14 @@ export class DateService {
             minutes = d.getMinutes().toString();
         }
         return hours + ":" + minutes;
+    }
+
+    public convertLocalDateTimeToDate(d: Date): string {
+      let dateString = d.toString();
+      let hours = dateString.slice(11,13);
+      let minutes = dateString.slice(14,16);
+
+      return hours + ":" + minutes;
     }
 
     public getDate(): string {
