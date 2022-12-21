@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { catchError, take } from 'rxjs';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { User } from '../models/login-view-model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   public user: User = {
     username: "",
@@ -22,9 +22,12 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private dateService: DateService,
     private cookieService: CookieService
   ) { }
+
+  ngOnInit(): void {
+    this.cookieService.deleteAll();
+  }
 
   public authUser(): void {
     this.authService.sendLoginRequest(this.user).pipe(
@@ -34,9 +37,8 @@ export class LoginComponent {
         return err
       }),
     ).subscribe(res => {
-      let date = this.dateService.convertDateToLocalDateTime(new Date());
-      this.cookieService.set("id", res.body)
-      this.router.navigateByUrl("/" + environment.getOrderByDayUrl + res.body + "/" + date);
+      this.cookieService.set("id", res.body);
+      this.router.navigateByUrl("/" + environment.getOrderByDayUrl);
     });
   }
 

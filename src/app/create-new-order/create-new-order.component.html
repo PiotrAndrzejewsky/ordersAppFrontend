@@ -6,7 +6,8 @@
                 id="title"
                 class="form-control"
                 name="title"
-                [(ngModel)]="order.title">
+                [(ngModel)]="order.title"
+                required>
 
     <label for="description">Description:</label>
     <input type="text"
@@ -19,7 +20,8 @@
     <select id="orderType"
             class="form-control"
             name="orderType"
-            [(ngModel)]="order.orderTypeId">
+            [(ngModel)]="order.orderTypeId"
+            required>
         <option *ngFor="let orderType of orderTypes"
             [value]="orderType.orderTypeId">
             {{orderType.name}}
