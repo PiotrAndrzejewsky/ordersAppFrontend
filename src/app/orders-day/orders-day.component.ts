@@ -26,39 +26,37 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
 
   public orders: Array<Order> = [];
   public orderTypes: Array<OrderType> = [];
-  public dt: string = new Date().toISOString().split('T')[0];
+  public dt: string = "";
 
   constructor(
     private dialogRef: MatDialog,
     private orderService: OrderService,
-    private route: ActivatedRoute,
     public dateService: DateService,
     private router: Router,
-    private cookieService: CookieService,
-    private orderTypeService: OrderTypeService
+    private orderTypeService: OrderTypeService,
+    private cookieService: CookieService
   ) { }
-  
+
 
   ngOnInit(): void {
-    this.route.params.pipe(
-      takeUntil(this.unSub$)
-    ).subscribe(params => {
-      this.date = params["date"];
-    })
-    this.getOrdersByDay();
+    this.date = this.dateService.getDate();
+    this.dt = this.date.split("T")[0];
+    this.changeDate();
     this.getOrderTypes();
   }
 
   getOrdersByDay() {
-    this.orderService.getOrdersByDay(this.date).pipe(
+    this.orderService.getOrdersByDay().pipe(
       takeUntil(this.unSub$),
       concatMap(orders => from(orders)),
-      map(order => { 
+      map(order => {
         order.plannedCompletionDate = new Date(order.plannedCompletionDate);
         return order;
       }),
       toArray()
-    ).subscribe(orders => this.orders = this.orderService.sortOrdersByDate(orders));
+    ).subscribe(orders => {
+      this.orders = this.orderService.sortOrdersByDate(orders)
+    });
   }
 
   getOrderTypes() {
@@ -88,13 +86,8 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     else {
       this.date = this.dt + "T00:00:00";
     }
+    this.cookieService.set("date", this.date);
     this.getOrdersByDay();
-  }
-
-  createNewOrder(): void {
-    this.dialogRef.open(CreateNewOrderComponent, {
-      width:'50%'
-    });
   }
 
   editOrder(orderId: number): void {
@@ -102,7 +95,13 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     this.dialogRef.open(EditOrderComponent, {
       width:'50%',
       data: order
-    });
+    }).afterClosed().pipe(
+      takeUntil(this.unSub$)
+    ).subscribe(
+      res => {
+        this.getOrdersByDay();
+      }
+    );
   }
 
   deleteOrder(orderId: number): void {
@@ -135,20 +134,9 @@ export class OrdersDayComponent implements OnInit, OnDestroy {
     );
   }
 
-  changeView(): void {
-    this.router.navigateByUrl("/" + environment.getOrderByWeekUrl + this.cookieService.get("id") + "/" + this.date);
-  }
-
-  addNewOrderType(): void {
-    this.dialogRef.open(CreateNewOrderTypeComponent, {
-      width:'50%'
-    });
-  }
-
-  deleteOrderType(): void {
-    this.dialogRef.open(DeleteOrderTypeComponent, {
-      width:'50%'
-    });
+  onNeedUpdate() {
+    console.log("dziala")
+    this.getOrdersByDay();
   }
 
   ngOnDestroy(): void {

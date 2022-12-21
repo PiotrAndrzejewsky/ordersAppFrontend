@@ -5,7 +5,7 @@
     min-height: 100%;
 }
 
-.header {
+/* .header {
     display: flex;
     flex-direction: row;
     height: 10%;
@@ -20,6 +20,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+} */
+
+app-header {
+  display: flex;
+    flex-direction: row;
+    height: 10%;
+    width: 100%;
+    min-width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .days, .table {
@@ -28,7 +38,7 @@
     width: 100%;
 }
 
-.days table { 
+.days table {
     width: 70%;
     text-align: center;
 }
@@ -75,4 +85,13 @@ span, p {
     border: none;
     padding: 0;
     margin: 0;
+}
+
+.crossed {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+}
+
+.normal {
+    text-decoration: none;
 }

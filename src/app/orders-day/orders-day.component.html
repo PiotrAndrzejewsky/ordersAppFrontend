@@ -1,20 +1,7 @@
 <div class="main">
-    <div class="header">
-        <div class="left">
-            <input type="date"
-            id="date"
-            [(ngModel)] ="dt">
-            <button type="button" (click)="changeDate()">Submit</button>
-            <button (click)="changeView()">Change view</button>
-
-        </div>
-        
-        <div class="right">
-            <button (click)="createNewOrder()">Add new order</button>
-            <button (click)="addNewOrderType()">Add new order type</button>
-            <button (click)="deleteOrderType()">Delete order type</button>
-        </div>
-    </div>
+    <app-header
+      (needUpdate)="onNeedUpdate()">
+    </app-header>
     <div class="table">
         <table cellspacing="0" cellpadding="0">
             <tr class="first">

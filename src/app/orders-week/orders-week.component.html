@@ -1,20 +1,7 @@
 <div class="main">
-    <div class="header">
-        <div class="left">
-            <input type="date"
-            id="date"
-            [(ngModel)] ="dt">
-            <button type="button" (click)="changeDate()">Submit</button>
-            <button (click)="changeView()">Change view</button>
-
-        </div>
-        
-        <div class="right">
-            <button (click)="createNewOrder()">Add new order</button>
-            <button (click)="addNewOrderType()">Add new order type</button>
-            <button (click)="deleteOrderType()">Delete order type</button>
-        </div>
-    </div>
+    <app-header
+      (needUpdate)="onNeedUpdate()">
+    </app-header>
 
     <div class="days">
         <table>
@@ -33,7 +20,10 @@
     <div class="table">
         <table>
             <tr *ngFor="let order of ordersArray[0]">
-                <td>
+                <td [ngClass]="{
+                    'crossed': order.completed,
+                    'normal': !order.completed
+                  }">
                     <p type="button" (click)="editOrder(order.orderId)">
                         {{order.title}}
                     </p>
@@ -43,7 +33,10 @@
 
         <table>
             <tr *ngFor="let order of ordersArray[1]">
-                <td>
+                <td [ngClass]="{
+                    'crossed': order.completed,
+                    'normal': !order.completed
+                  }">
                     <span type="button" (click)="editOrder(order.orderId)">
                         {{order.title}}
                     </span>
@@ -53,7 +46,10 @@
 
         <table>
             <tr *ngFor="let order of ordersArray[2]">
-                <td>
+                <td [ngClass]="{
+                    'crossed': order.completed,
+                    'normal': !order.completed
+                  }">
                     <span type="button" (click)="editOrder(order.orderId)">
                         {{order.title}}
                     </span>
@@ -63,7 +59,10 @@
 
         <table>
             <tr *ngFor="let order of ordersArray[3]">
-                <td>
+                <td [ngClass]="{
+                    'crossed': order.completed,
+                    'normal': !order.completed
+                  }">
                     <span type="button" (click)="editOrder(order.orderId)">
                         {{order.title}}
                     </span>
@@ -73,7 +72,10 @@
 
         <table>
             <tr *ngFor="let order of ordersArray[4]">
-                <td>
+                <td [ngClass]="{
+                    'crossed': order.completed,
+                    'normal': !order.completed
+                  }">
                     <span type="button" (click)="editOrder(order.orderId)">
                         {{order.title}}
                     </span>
@@ -83,7 +85,10 @@
 
         <table>
             <tr *ngFor="let order of ordersArray[5]">
-                <td>
+                <td [ngClass]="{
+                    'crossed': order.completed,
+                    'normal': !order.completed
+                  }">
                     <span type="button" (click)="editOrder(order.orderId)">
                         {{order.title}}
                     </span>
@@ -93,7 +98,10 @@
 
         <table>
             <tr *ngFor="let order of ordersArray[6]">
-                <td>
+                <td [ngClass]="{
+                    'crossed': order.completed,
+                    'normal': !order.completed
+                  }">
                     <span type="button" (click)="editOrder(order.orderId)">
                         {{order.title}}
                     </span>
